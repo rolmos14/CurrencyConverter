@@ -2,16 +2,23 @@ class CryptoCurrency:
     def __init__(self, name):
         self.name = name
         self.quantity = 0
+        self.rate = 0
 
     def __iadd__(self, quantity):
         self.quantity += quantity
         return self
 
+    def set_quantity(self):
+        self.quantity = int(input(f"Please, enter the number of {self.name}s you have: "))
+
+    def set_rate(self):
+        self.rate = float(input("Please, enter the exchange rate: "))
+
     def greet(self):
         print(f'Meet a {self.name}!')
 
     def in_dollars(self):
-        return self.quantity * 100
+        return self.quantity * self.rate
 
     def show(self):
         plural = self.quantity > 1
@@ -23,6 +30,6 @@ class CryptoCurrency:
 
 
 conicoin = CryptoCurrency("conicoin")
-amount = int(input())
-conicoin += amount
-conicoin.show()
+conicoin.set_quantity()
+conicoin.set_rate()
+print(f'The total amount of dollars: {conicoin.in_dollars()}')
