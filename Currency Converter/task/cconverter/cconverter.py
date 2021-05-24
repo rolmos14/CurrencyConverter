@@ -1,35 +1,31 @@
 class CryptoCurrency:
     def __init__(self, name):
         self.name = name
-        self.quantity = 0
-        self.rate = 0
+        self.quantity = 0.0
+        self.rate = dict()
 
     def __iadd__(self, quantity):
         self.quantity += quantity
         return self
 
     def set_quantity(self):
-        self.quantity = int(input(f"Please, enter the number of {self.name}s you have: "))
+        self.quantity = float(input())
 
-    def set_rate(self):
-        self.rate = float(input("Please, enter the exchange rate: "))
+    def set_rate(self, currency, rate):
+        self.rate[currency] = rate
 
-    def greet(self):
-        print(f'Meet a {self.name}!')
-
-    def in_dollars(self):
-        return self.quantity * self.rate
-
-    def show(self):
-        plural = self.quantity > 1
+    def show_currencies(self):
+        plural = self.quantity > 1.0
         name = self.name if not plural else self.name + 's'
-        print(f'I have {self.quantity} {name}.',
-              f'{self.quantity} {name} cost {self.in_dollars()} dollars.',
-              'I am rich! Yippee!',
-              sep='\n')
+        for currency, rate in self.rate.items():
+            print(f'I will get {round(self.quantity * rate, 2)} {currency} from the sale of {self.quantity} {name}.')
 
 
 conicoin = CryptoCurrency("conicoin")
 conicoin.set_quantity()
-conicoin.set_rate()
-print(f'The total amount of dollars: {conicoin.in_dollars()}')
+conicoin.set_rate("RUB", 2.98)
+conicoin.set_rate("ARS", 0.82)
+conicoin.set_rate("HNL", 0.17)
+conicoin.set_rate("AUD", 1.9622)
+conicoin.set_rate("MAD", 0.208)
+conicoin.show_currencies()
